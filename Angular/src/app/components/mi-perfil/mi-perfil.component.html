@@ -1,0 +1,19 @@
+<div class="container">
+    <div>
+        <h1>Mi perfil</h1>
+        <hr>
+    </div>
+    <div *ngIf="identity">
+        <div row>
+            <div>
+                <h2>Nombre: <small>{{identity.name}}</small></h2>
+                <h2>Apellidos: <small>{{identity.surname}}</small></h2>
+                <h2>Email: <small>{{identity.email}}</small></h2>
+                <h2>Rol: <small>{{identity.rol}}</small></h2>
+                <h2>Dispositivo: <small>{{identity.permiso}}</small></h2>
+            </div>
+
+        </div>
+    </div>
+
+</div>

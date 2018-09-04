@@ -1,0 +1,307 @@
+<div class="container">
+    <div>
+        <h1>Cuadro de control <small>DomoticFox</small></h1>
+        <hr>
+    </div>
+    <div>
+        <div class="text-left" *ngIf="!identity.permiso">
+            <h3>No tienes ningún dispositivo registrado</h3>
+
+        </div>
+
+        <div class="text-left" *ngIf="!estadoESP8266">
+
+        </div>
+
+        <div class="text-left" *ngIf="estadoESP8266">
+            <div>
+                <br>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i [className]="claseSensor"></i>
+                                        </div>
+                                        <div *ngIf="estadoESP8266.tipoAnalogico=='Temperatura' && datoSensor.valor">
+                                            <div class="col-xs-9 text-center fa-3x">
+                                                <div>{{datoSensor.valor}} ºC </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="estadoESP8266.tipoAnalogico!='Temperatura'">
+                                            <div class="col-xs-9 text-center fa-3x">
+                                                <div>{{datoSensor.valor}} </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer" [ngStyle]="{'color':'#286090'}">
+                                    <span class="pull-left">{{estadoESP8266.tipoAnalogico}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio1.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(1)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio1.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio1.automatico">
+                                                <div *ngIf="gpio1.sentido">
+                                                    <div class="huge">&ge; {{gpio1.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio1.sentido">
+                                                    <div class="huge">&lt; {{gpio1.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio1.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio1.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio2.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(2)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio2.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio2.automatico">
+                                                <div *ngIf="gpio2.sentido">
+                                                    <div class="huge">&ge; {{gpio2.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio2.sentido">
+                                                    <div class="huge">&lt; {{gpio2.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio2.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio2.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio3.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(3)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio3.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio3.automatico">
+                                                <div *ngIf="gpio3.sentido">
+                                                    <div class="huge">&ge; {{gpio3.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio3.sentido">
+                                                    <div class="huge">&lt; {{gpio3.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio3.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio3.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio4.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(4)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio4.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio4.automatico">
+                                                <div *ngIf="gpio4.sentido">
+                                                    <div class="huge">&ge; {{gpio4.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio4.sentido">
+                                                    <div class="huge">&lt; {{gpio4.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio4.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio4.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio5.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(5)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio5.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio5.automatico">
+                                                <div *ngIf="gpio5.sentido">
+                                                    <div class="huge">&ge; {{gpio5.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio5.sentido">
+                                                    <div class="huge">&lt; {{gpio5.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio5.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio5.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio6.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(6)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio6.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio6.automatico">
+                                                <div *ngIf="gpio6.sentido">
+                                                    <div class="huge">&ge; {{gpio6.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio6.sentido">
+                                                    <div class="huge">&lt; {{gpio6.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio6.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio6.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6" *ngIf="gpio7.activado">
+                        <div id="claseVisualizar" (click)="enviarEncenderOApagar(7)">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-power-off fa-5x" [ngStyle]="{'color': gpio7.colorEstado}"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div *ngIf="gpio7.automatico">
+                                                <div *ngIf="gpio7.sentido">
+                                                    <div class="huge">&ge; {{gpio7.umbral}}</div>
+                                                </div>
+                                                <div *ngIf="!gpio7.sentido">
+                                                    <div class="huge">&lt; {{gpio7.umbral}}</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!gpio7.automatico">
+                                                <div class="huge"> &nbsp; </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">{{gpio7.nombre}}</span>
+                                    <span class="pull-right"></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <div class="alert alert-danger text-left" *ngIf="mostrar">
+                Su dispositivo no está funcionando correctamente. Asegúrese que funcione la conexión WIFI, sino el fallo se debe a un incorrecto funcionanmiento. Se le recomienda que lo reinicie.
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

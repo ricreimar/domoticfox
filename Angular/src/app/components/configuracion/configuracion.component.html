@@ -1,0 +1,387 @@
+<div class="container">
+    <div>
+        <h1>Configuración <small>DomoticFox</small></h1>
+        <hr>
+    </div>
+
+    <div *ngIf="!estadoESP8266">
+        Cargando...
+    </div>
+    <div class="text-left" *ngIf="!identity.permiso">
+        <h3>Registre su nuevo dispositivo</h3>
+        <div class="col-lg-4 col-sm-5 col-md-8 center-block">
+            <form #registerFormPlaca="ngForm" (ngSubmit)="onSubmit()">
+                <p>
+                    <label>Identificador</label>
+                    <input type="text" class="form-control" name="identificadorSerieId" #identificadorSerieId="ngModel" [(ngModel)]="placa.identificadorSerieId">
+                    <span *ngIf="!identificadorSerieId.valid && identificadorSerieId.touched">
+                                <small>El nombre es obligatorio</small>
+                                </span>
+                </p>
+                <p>
+                    <input type="radio" value="Temperatura" name="tipoAnalogico" [(ngModel)]="placa.tipoAnalogico" checked />
+                    <label>Temperatura</label>
+                    <input type="radio" value="Luminosidad" name="tipoAnalogico" [(ngModel)]="placa.tipoAnalogico" />
+
+                    <label>Luminosidad</label>
+
+
+                    <input type="radio" value="Humedad" name="tipoAnalogico" [(ngModel)]="placa.tipoAnalogico" />
+                    <label>Humedad</label>
+
+                </p>
+                <p>
+                    <label>Contraseña</label>
+                    <input type="password" class="form-control" name="passwordPlaca" #passwordPlaca="ngModel" [(ngModel)]="placa.passwordPlaca" required />
+                    <span *ngIf="!passwordPlaca.valid">
+                                La contraseña es obligatorio
+                    </span>
+                </p>
+                <input type="submit" value="Registrar" class="btn btn-primary" [disabled]="!registerFormPlaca.form.valid" />
+
+            </form>
+        </div>
+    </div>
+
+    <div>
+
+        <div class="text-left" *ngIf="identity.permiso && estadoESP8266">
+
+            <div id="config " class="row ">
+                <div class="m-4 p-3 col-lg-3 col-sm-5 ">
+                    <h3>GPIO 1</h3>
+
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN1 maxlength="25 " placeholder="{{gpio1.nombre}} " (keyup.enter)="enviarTexto(1,boxN1.value) ">
+                    </div>
+                    <div *ngIf="gpio1.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio1.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(1) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(1) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio1.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio1.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(1) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(1) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU1 maxlength="10 " placeholder="{{gpio1.umbral}} " (keyup.enter)="enviarUmbral(1,boxU1.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio1.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio1.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(1) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(1) "> &lt; </button>
+                    </div>
+
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 2</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN2 maxlength="25 " placeholder="{{gpio2.nombre}} " (keyup.enter)="enviarTexto(2,boxN2.value) ">
+                    </div>
+                    <div *ngIf="gpio2.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio2.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(2) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(2) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio2.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio2.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(2) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(2) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU2 maxlength="10 " placeholder="{{gpio2.umbral}} " (keyup.enter)="enviarUmbral(2,boxU2.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio2.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio2.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(2) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(2) "> &lt; </button>
+                    </div>
+
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 3</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN3 maxlength="25 " placeholder="{{gpio3.nombre}} " (keyup.enter)="enviarTexto(3,boxN3.value) ">
+                    </div>
+                    <div *ngIf="gpio3.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio3.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(3) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(3) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio3.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio3.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(3) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(3) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU3 maxlength="10 " placeholder="{{gpio3.umbral}} " (keyup.enter)="enviarUmbral(3,boxU3.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio3.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio3.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(3) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(3) "> &lt; </button>
+                    </div>
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 4</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN4 maxlength="25 " placeholder="{{gpio4.nombre}} " (keyup.enter)="enviarTexto(4,boxN4.value) ">
+                    </div>
+                    <div *ngIf="gpio4.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio4.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(4) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(4) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio4.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio4.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(4) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(4) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU4 maxlength="10 " placeholder="{{gpio4.umbral}} " (keyup.enter)="enviarUmbral(4,boxU4.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio4.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio4.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(4) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(4) "> &lt; </button>
+                    </div>
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 5</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN5 maxlength="25 " placeholder="{{gpio5.nombre}} " (keyup.enter)="enviarTexto(5,boxN5.value) ">
+                    </div>
+                    <div *ngIf="gpio5.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio5.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(5) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(5) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio5.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio5.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(5) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(5) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU5 maxlength="10 " placeholder="{{gpio5.umbral}} " (keyup.enter)="enviarUmbral(5,boxU5.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio5.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio5.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(5) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(5) "> &lt; </button>
+                    </div>
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 6</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN6 maxlength="25 " placeholder="{{gpio6.nombre}} " (keyup.enter)="enviarTexto(6,boxN6.value) ">
+                    </div>
+                    <div *ngIf="gpio6.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio6.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(6) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(6) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio6.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio6.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(6) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(6) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU6 maxlength="10 " placeholder="{{gpio6.umbral}} " (keyup.enter)="enviarUmbral(6,boxU6.value) ">
+                    </div>
+                    <div>
+                        <div *ngIf="gpio6.sentido ">
+                            <h5>Se activa si &ge; umbral</h5>
+                        </div>
+                        <div *ngIf="!gpio6.sentido ">
+                            <h5>Se activa si &lt; umbral</h5>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(6) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(6) "> &lt; </button>
+                    </div>
+                </div>
+                <div class="m-4 p-3 border border-dark rounded col-lg-3 col-sm-5 ">
+                    <h3>GPIO 7</h3>
+                    <div>
+                        <h5>Nombre</h5>
+                        <input #boxN7 maxlength="25 " placeholder="{{gpio7.nombre}} " (keyup.enter)="enviarTexto(7,boxN7.value) ">
+                    </div>
+                    <div *ngIf="gpio7.activado ">
+                        <h5>Activado</h5>
+                    </div>
+                    <div *ngIf="!gpio7.activado ">
+                        <h5>Desactivado</h5>
+                    </div>
+                    <div class=" btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarActivado(7) "> Activar </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarDesactivado(7) "> Desactivar </button>
+                    </div>
+                    <div>
+
+                        <div *ngIf="gpio7.automatico ">
+                            <h5>Automático</h5>
+                        </div>
+                        <div *ngIf="!gpio7.automatico ">
+                            <h5>Manual</h5>
+                        </div>
+                        <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarAutomatico(7) "> Automático </button>
+                            <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarManual(7) "> Manual </button>
+                        </div>
+                        <h5>Umbral</h5>
+                        <input #boxU7 maxlength="10 " placeholder="{{gpio7.umbral}} " (keyup.enter)="enviarUmbral(7,boxU7.value) ">
+                    </div>
+                    <div *ngIf="gpio7.sentido ">
+                        <h5>Se activa si &ge; umbral</h5>
+                    </div>
+                    <div *ngIf="!gpio7.sentido ">
+                        <h5>Se activa si &lt; umbral</h5>
+                    </div>
+                    <div class="btn-group btn-group-toggle " data-toggle="buttons ">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMayorUmbral(7) "> &ge; </button>
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="enviarMenorUmbral(7) "> &lt; </button>
+                    </div>
+
+                </div>
+
+            </div>
+            <br>
+            <br>
+            <div row>
+                <h4>Pulsador1</h4>
+                <input #boxP1 maxlength="40 " placeholder="{{estadoESP8266.pulsador1}} " (keyup.enter)="enviarPulsador1(boxP1.value) ">
+
+            </div>
+            <div row>
+                <h4>Pulsador2</h4>
+                <input #boxP2 maxlength="40 " placeholder="{{estadoESP8266.pulsador2}} " (keyup.enter)="enviarPulsador2(boxP2.value) ">
+
+            </div>
+            <br>
+            <br>
+            <div row>
+                <div *ngIf="identity.rol=='propietario'">
+                    <div id="botonEliminarESP" class="row">
+                        <button class="btn btn-primary " type="radio " name="options " id="option3 " autocomplete="off " (click)="eliminarDispositivo() "> Eliminar dispositivo </button>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

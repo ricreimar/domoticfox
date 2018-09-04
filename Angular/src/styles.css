@@ -1,0 +1,94 @@
+.h1-strong {
+    font-size: 3px;
+    font-weight: bold;
+    margin-left: 13px;
+    margin-bottom: 20px;
+    margin-top: 3px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+#mi-menu.navbar-default .navbar-brand {
+    color: white;
+}
+
+#mi-menu.navbar-default {
+    font-size: 14px;
+    background-color: #337AB7;
+    border-width: 0px;
+    border-radius: 0px;
+}
+
+#mi-menu.navbar-default .navbar-nav>li>a {
+    color: white;
+    background-color: #337AB7;
+}
+
+#mi-menu.navbar-default .navbar-nav>li>a:hover,
+#mi-menu.navbar-default .navbar-nav>li>a:focus {
+    color: white;
+    background-color: #286090;
+}
+
+#mi-menu.navbar-default .navbar-nav>.active>a,
+#mi-menu.navbar-default .navbar-nav>.active>a:hover,
+#mi-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: white;
+    background-color: #286090;
+}
+
+#mi-menu.navbar-default .navbar-toggle {
+    border-color: #286090;
+}
+
+#mi-menu.navbar-default .navbar-toggle:hover,
+#mi-menu.navbar-default .navbar-toggle:focus {
+    background-color: #286090;
+}
+
+#mi-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #286090;
+}
+
+#mi-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#mi-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #337AB7;
+}
+
+.mi-menu .container-fluid .collapse .nav .dropdown-menu {
+    color: red;
+}
+
+
+/*
+.jumbotron {
+    margin: 0px;
+    padding: 0px;
+    background: #eff4ff !important;
+    border-radius: 2px;
+    text-align: center;
+}*/
+
+.navbar-nav>li>.dropdown-menu {
+    margin-top: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.dropdown-menu>li>a {
+    color: black !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+#visualizar {
+    background: #EFF4FF !important;
+    padding: 20px !important;
+    margin: 5px !important;
+    border: 15px !important;
+    padding: 5px !important;
+    box-sizing: border-box;
+    border: 1px solid red !important;
+}
